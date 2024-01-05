@@ -4,13 +4,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/Header";
 import NavBar from "./components/NavBar/NavBar";
-import Dialogs from "./components/Dialogs/Dialogs";
 import Profile from "./components/Profile/Profile";
-import { ActionsType, StateType } from "./redux/state";
+import { ActionsType, StateType } from "./redux/store ";
+import { Store } from "redux";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 interface AppProps {
-  appState: StateType;
-  dispatch: (action: ActionsType) => void;
+  store: Store;
 }
 
 const App: React.FC<AppProps> = (props) => {
@@ -20,18 +20,10 @@ const App: React.FC<AppProps> = (props) => {
       <NavBar />
       <div className="app-wrapper-content">
         <Routes>
-          <Route
-            path="/profile"
-            element={
-              <Profile
-                profilePageState={props.appState.profilePage}
-                dispatch={props.dispatch}
-              />
-            }
-          />
+          <Route path="/profile" element={<Profile store={props.store} />} />
           <Route
             path="/dialogs*"
-            element={<Dialogs dialogsPageState={props.appState.dialogsPage} />}
+            element={<DialogsContainer store={props.store} />}
           />
         </Routes>
       </div>

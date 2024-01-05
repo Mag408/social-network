@@ -1,4 +1,4 @@
-import { MessageItemType } from "../../../redux/state";
+import { MessageItemType } from "../../../redux/store ";
 import classes from "../Dialogs.module.css";
 
 type MessangePropsType = {

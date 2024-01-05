@@ -3,10 +3,18 @@ import React from "react";
 import classes from "./Dialogs.module.css";
 import DialogsItem from "./DialogsItem/DialogsItem";
 import Message from "./Messages/Messages";
-import { DialogsPageType, profilePageType } from "../../redux/state";
+import {
+  ActionsType,
+  AddMessageAC,
+  DialogsPageType,
+  UpdateNewMessageAC,
+  profilePageType,
+} from "../../redux/store ";
 
 export type DialogsPropsType = {
   dialogsPageState: DialogsPageType;
+  AddMessage: () => void;
+  changeMessange: (value: string) => void;
 };
 
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
@@ -18,13 +26,27 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
     return <Message message={value.message} />;
   });
 
+  const onClickAddMessage = () => {
+    props.AddMessage();
+  };
+  const onNewMessangeChange = (value: string) => {
+    props.changeMessange(value);
+  };
+
   return (
     <div className={classes.dialogs}>
       <div className={classes.dialogsItems}>{dialogsElement}</div>
       <div className={classes.messanges}>
-        {messangesElement}
-        <textarea name=""></textarea>
-        <button>add message</button>
+        <div className="">{messangesElement}</div>
+        <div className="">
+          <textarea
+            value={props.dialogsPageState.newMessageText}
+            onChange={(e) => onNewMessangeChange(e.target.value)}
+          ></textarea>
+        </div>
+        <div className="">
+          <button onClick={onClickAddMessage}>add message</button>
+        </div>
       </div>
     </div>
   );

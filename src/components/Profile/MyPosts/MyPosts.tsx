@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef } from "react";
+import React, { useRef } from "react";
 import classes from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import {
@@ -6,12 +6,13 @@ import {
   AddPostAC,
   PostDataType,
   UpdateNewPostAC,
-} from "../../../redux/state";
+} from "../../../redux/store ";
 
 export type MyPostsPropsType = {
   postsData: PostDataType[];
   newPostText: string;
-  dispatch: (action: ActionsType) => void;
+  addPost: () => void;
+  updateNewPostText: (text: string) => void;
 };
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -23,15 +24,13 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
   const onClickAddPost = () => {
     if (newPostElement.current) {
-      const actoin = AddPostAC();
-      props.dispatch(actoin);
+      props.addPost();
     }
   };
 
   const onPostChange = (text: string) => {
     if (newPostElement.current) {
-      const actoin = UpdateNewPostAC(text);
-      props.dispatch(actoin);
+      props.updateNewPostText(text);
     }
   };
 
