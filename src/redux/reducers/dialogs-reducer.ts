@@ -1,11 +1,11 @@
 // import { ActionsType } from "../store ";
 
 export type AddMessangeActionType = {
-  type: string;
+  type: "ADD_MESSAGE";
 };
 
 export type NewMessageChangeActionType = {
-  type: string;
+  type: "UPDATE-NEW-MESSAGE-TEXT";
   messageText: string;
 };
 
@@ -20,7 +20,7 @@ export type MessageItemType = {
   message: string;
 };
 
-export type StateType = {
+export type DialogsStateType = {
   dialogsData: DialogItemType[];
   messagesData: MessageItemType[];
   newMessageText: string;
@@ -44,30 +44,40 @@ const messagesData: MessageItemType[] = [
   { message: "Nice" },
 ];
 
-const initialState: StateType = {
+const initialState: DialogsStateType = {
   dialogsData: [...dialogsData],
   messagesData: [...messagesData],
   newMessageText: "",
 };
 
 export const dialogReducer = (
-  state: StateType = initialState,
+  state: DialogsStateType = initialState,
   action: ActionsType
-): StateType => {
+): DialogsStateType => {
   switch (action.type) {
     case ADD_MESSAGE: {
       const newMessage = { message: state.newMessageText };
-      state.messagesData.push(newMessage);
-      state.newMessageText = "";
-      return state;
+      const StateCopy = {
+        ...state,
+        messagesData: [...state.messagesData, newMessage],
+        newMessageText: "",
+      };
+      return StateCopy;
     }
     case UPDATE_NEW_MESSAGE_TEXT: {
-      //@ts-ignore
-      state.newMessageText = action.messageText;
-      return state;
+      const StateCopy = { ...state };
+
+      StateCopy.newMessageText = action.messageText;
+      return StateCopy;
     }
     default: {
       return state;
     }
   }
 };
+
+export const AddMessageAC = () => ({ type: "ADD_MESSAGE" });
+export const UpdateNewMessageAC = (text: string) => ({
+  type: "UPDATE-NEW-MESSAGE-TEXT",
+  messageText: text,
+});

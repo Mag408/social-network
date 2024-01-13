@@ -5,19 +5,13 @@ import "./index.css";
 import App from "./App";
 // import { StateType, store } from "./redux/store ";
 import { store } from "./redux/redux-store";
+import { Provider } from "react-redux";
 
-export const rerenderEntireTree = (state: any) => {
-  ReactDOM.render(
-    <BrowserRouter>
-      <App store={store} />
-    </BrowserRouter>,
-    document.getElementById("root")
-  );
-};
-
-rerenderEntireTree(store.getState());
-
-store.subscribe(() => {
-  const state = store.getState();
-  rerenderEntireTree(state);
-});
+ReactDOM.render(
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
+  document.getElementById("root")
+);

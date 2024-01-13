@@ -3,16 +3,10 @@ import React from "react";
 import classes from "./Dialogs.module.css";
 import DialogsItem from "./DialogsItem/DialogsItem";
 import Message from "./Messages/Messages";
-import {
-  ActionsType,
-  AddMessageAC,
-  DialogsPageType,
-  UpdateNewMessageAC,
-  profilePageType,
-} from "../../redux/store ";
+import { DialogsStateType } from "../../redux/reducers/dialogs-reducer";
 
 export type DialogsPropsType = {
-  dialogsPageState: DialogsPageType;
+  dialogsPageState: DialogsStateType;
   AddMessage: () => void;
   changeMessange: (value: string) => void;
 };

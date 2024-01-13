@@ -1,41 +1,45 @@
 import React from "react";
 
 import classes from "./Dialogs.module.css";
-import DialogsItem from "./DialogsItem/DialogsItem";
-import Message from "./Messages/Messages";
-import {
-  ActionsType,
-  AddMessageAC,
-  DialogsPageType,
-  UpdateNewMessageAC,
-  profilePageType,
-} from "../../redux/store ";
 import Dialogs from "./Dialogs";
-import { Store } from "redux";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
+import { AppStateType } from "../../redux/redux-store";
+import {
+  AddMessageAC,
+  DialogsStateType,
+  UpdateNewMessageAC,
+} from "../../redux/reducers/dialogs-reducer";
 
-export type DialogsContainerPropsType = {
-  store: Store;
+type mapStateToPropsType = {
+  dialogsPageState: DialogsStateType;
 };
 
-const DialogsContainer: React.FC<DialogsContainerPropsType> = (props) => {
-  const state = props.store.getState();
-
-  const onClickAddMessage = () => {
-    const action = AddMessageAC();
-    props.store.dispatch(action);
-  };
-  const onNewMessangeChange = (value: string) => {
-    const action = UpdateNewMessageAC(value);
-    props.store.dispatch(action);
-  };
-
-  return (
-    <Dialogs
-      AddMessage={onClickAddMessage}
-      changeMessange={onNewMessangeChange}
-      dialogsPageState={state.dialogsPage}
-    />
-  );
+type mapDispatchToPropsType = {
+  AddMessage: () => void;
+  changeMessange: (value: string) => void;
 };
 
-export default DialogsContainer;
+const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
+  return {
+    dialogsPageState: state.dialogsPage,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
+  return {
+    AddMessage: () => {
+      const action = AddMessageAC();
+      dispatch(action);
+    },
+    changeMessange: (value: string) => {
+      const action = UpdateNewMessageAC(value);
+      dispatch(action);
+    },
+  };
+};
+
+export const DialogsContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dialogs);

@@ -1,40 +1,41 @@
+//@ts-nocheck
 import { dialogReducer } from "./reducers/dialogs-reducer";
 import { profailReducer } from "./reducers/profail-reducer";
 import { sidebarReducer } from "./reducers/sidebar-reducer";
 
-export type PostDataType = {
+type PostDataType = {
   message: string;
 };
 
-export type DialogItemType = {
+type DialogItemType = {
   name: string;
   id: string;
 };
 
-export type MessageItemType = {
+type MessageItemType = {
   message: string;
 };
 
-export type profilePageType = {
+type profilePageType = {
   postsData: PostDataType[];
   newPostText: string;
 };
 
-export type DialogsPageType = {
+type DialogsPageType = {
   dialogsData: DialogItemType[];
   messagesData: MessageItemType[];
   newMessageText: string;
 };
 
-export type SideBarType = {};
+type SideBarType = {};
 
-export type StateType = {
+type StateType = {
   profilePage: profilePageType;
   dialogsPage: DialogsPageType;
   sideBar: SideBarType;
 };
 
-export type StoreType = {
+type StoreType = {
   _state: StateType;
   getState: () => StateType;
   _callSubscriber: (state: StateType) => void;
@@ -42,25 +43,25 @@ export type StoreType = {
   dispatch: (action: ActionsType) => void;
 };
 
-export type AddPostActionType = {
+type AddPostActionType = {
   type: string;
 };
 
-export type AddMessangeActionType = {
+type AddMessangeActionType = {
   type: string;
 };
 
-export type NewPostChangeActionType = {
+type NewPostChangeActionType = {
   type: string;
   postText: string;
 };
 
-export type NewMessageChangeActionType = {
+type NewMessageChangeActionType = {
   type: string;
   messageText: string;
 };
 
-export type ActionsType =
+type ActionsType =
   | AddPostActionType
   | NewPostChangeActionType
   | NewMessageChangeActionType
@@ -119,14 +120,14 @@ export const store: StoreType = {
   },
 };
 
-export const AddPostAC = () => ({ type: "ADD-POST" });
-export const UpdateNewPostAC = (text: string) => ({
+const AddPostAC = () => ({ type: "ADD-POST" });
+const UpdateNewPostAC = (text: string) => ({
   type: "UPDATE-NEW-POST-TEXT",
   postText: text,
 });
 
-export const AddMessageAC = () => ({ type: "ADD_MESSAGE" });
-export const UpdateNewMessageAC = (text: string) => ({
+const AddMessageAC = () => ({ type: "ADD_MESSAGE" });
+const UpdateNewMessageAC = (text: string) => ({
   type: "UPDATE-NEW-MESSAGE-TEXT",
   messageText: text,
 });

@@ -1,14 +1,12 @@
-// import { ActionsType, StateType, profilePageType } from "../store ";
-
 export const ADD_POST = "ADD-POST";
 export const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
 export type AddPostActionType = {
-  type: string;
+  type: "ADD-POST";
 };
 
 export type NewPostChangeActionType = {
-  type: string;
+  type: "UPDATE-NEW-POST-TEXT";
   postText: string;
 };
 
@@ -18,7 +16,7 @@ export type PostDataType = {
   message: string;
 };
 
-export type StateType = {
+export type ProfileStateType = {
   postsData: PostDataType[];
   newPostText: string;
 };
@@ -28,13 +26,13 @@ const postsData: PostDataType[] = [
   { message: "Poshol nah" },
 ];
 
-const initialState: StateType = {
+const initialState: ProfileStateType = {
   postsData: [...postsData],
   newPostText: "",
 };
 
 export const profailReducer = (
-  state: StateType = initialState,
+  state: ProfileStateType = initialState,
   action: ActionsType
 ) => {
   switch (action.type) {
@@ -43,17 +41,29 @@ export const profailReducer = (
         id: 5,
         message: state.newPostText,
       };
-      state.postsData.push(newPost);
-      state.newPostText = "";
-      return state;
+
+      const StateCopy = {
+        ...state,
+        postsData: [...state.postsData, newPost],
+        newPostText: "",
+      };
+
+      return StateCopy;
     }
     case UPDATE_NEW_POST_TEXT: {
-      //@ts-ignore
-      state.newPostText = action.postText;
-      return state;
+      const StateCopy = { ...state };
+
+      StateCopy.newPostText = action.postText;
+      return StateCopy;
     }
     default: {
       return state;
     }
   }
 };
+
+export const AddPostAC = () => ({ type: "ADD-POST" });
+export const UpdateNewPostAC = (text: string) => ({
+  type: "UPDATE-NEW-POST-TEXT",
+  postText: text,
+});
