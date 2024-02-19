@@ -4,12 +4,15 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import { MyPostsContainer } from "./MyPosts/MyPostsContainer";
 import { Store } from "redux";
 
-type ProfilePropsType = {};
+type ProfilePropsType = {
+  //TODO дописать тип profile вместо any
+  profile: any;
+};
 
 const Profile: React.FC<ProfilePropsType> = (props) => {
   return (
     <div>
-      <ProfileInfo />
+      <ProfileInfo profile={props.profile} />
       <MyPostsContainer />
     </div>
   );

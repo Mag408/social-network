@@ -1,9 +1,9 @@
 import { Dispatch, Store } from "redux";
 import MyPosts from "./MyPosts";
 import {
-  AddPostAC,
+  addPost,
   PostDataType,
-  UpdateNewPostAC,
+  updateNewPost,
 } from "../../../redux/reducers/profail-reducer";
 import { connect } from "react-redux";
 import { AppStateType } from "../../../redux/redux-store";
@@ -28,10 +28,10 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
 const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
   return {
     addPost: () => {
-      dispatch(AddPostAC());
+      dispatch(addPost());
     },
     updateNewPostText: (text: string) => {
-      dispatch(UpdateNewPostAC(text));
+      dispatch(updateNewPost(text));
     },
   };
 };

@@ -1,80 +1,111 @@
-import React from "react";
-import { UserType } from "../../redux/reducers/users-reducer";
+import React, { FC } from "react";
 import styles from "./users.module.css";
+import defoltAvatar from "../../accets/img/defolt-avatar.jpg";
+import { UserType } from "../../redux/reducers/users-reducer";
+import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 type UsersPropsType = {
   users: UserType[];
+  pageSize: number;
+  totalUsersCount: number;
+  currentPage: number;
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
-  setUsers: (users: UserType[]) => void;
+  onPageChanged: (p: number) => void;
+  toggleFollowingInProgress: (isFetching: boolean, userId: number) => void;
+  followingInProgress: number[];
 };
 
-const Users: React.FC<UsersPropsType> = (props) => {
-  if (props.users.length === 0) {
-    props.setUsers([
-      {
-        id: 1,
-        avatarUrl:
-          "https://sopranoclub.ru/images/memy-na-avu-275-memnyh-avatarok/file56870.jpeg",
-        followed: false,
-        fullName: "Maga",
-        status: "Magistr",
-        location: { city: "Magas", country: "Russia" },
-      },
-      {
-        id: 2,
-        avatarUrl:
-          "https://pic.rutubelist.ru/video/46/b2/46b25de0bf3d3fa60a22037e55071354.jpg",
-        followed: true,
-        fullName: "Arut",
-        status: "Pidor",
-        location: { city: "Magas", country: "Russia" },
-      },
-      {
-        id: 3,
-        avatarUrl:
-          "https://i.pinimg.com/736x/b1/66/fd/b166fd3928b41f6c62d3214f97bfa48d--pretty-pictures-best-funny-pictures.jpg",
-        followed: true,
-        fullName: "Morgen",
-        status: "Pidoras",
-        location: { city: "Magas", country: "Russia" },
-      },
-      {
-        id: 4,
-        avatarUrl:
-          "https://krot.club/uploads/posts/2022-03/1647122720_58-krot-info-p-muzhik-s-borodoi-prikol-smeshnie-foto-62.jpg",
-        followed: false,
-        fullName: "kolabok",
-        status: "Krug",
-        location: { city: "Magas", country: "Russia" },
-      },
-    ]);
-  }
+const Users: FC<UsersPropsType> = (props) => {
+  const countPage = props.totalUsersCount / props.pageSize;
 
+  let pages = [];
+
+  for (let i = 1; i <= countPage; i++) {
+    pages.push(i);
+  }
   return (
     <div>
+      {pages.map((p) => (
+        <span
+          className={props.currentPage === p ? styles.selectedPage : ""}
+          onClick={() => props.onPageChanged(p)}
+        >
+          {p}
+        </span>
+      ))}
       {props.users.map((u) => (
         <div key={u.id}>
           <span>
             <div>
-              <img className={styles.avatar__img} src={u.avatarUrl} alt="" />
+              <NavLink to={"/profile/" + u.id}>
+                <img
+                  className={styles.avatar__img}
+                  src={u.photos.small ? u.photos.small : defoltAvatar}
+                  alt=""
+                />
+              </NavLink>
             </div>
             <div>
               {u.followed ? (
-                <button onClick={() => props.unfollow(u.id)}>Follow</button>
+                <button
+                  disabled={props.followingInProgress.some((id) => id === u.id)}
+                  onClick={() => {
+                    props.toggleFollowingInProgress(true, u.id);
+                    axios
+                      .delete(
+                        `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                        {
+                          withCredentials: true,
+                          headers: {
+                            "API-KEY": "057859b6-03b9-43df-8369-90a969a06c40",
+                          },
+                        }
+                      )
+                      .then((res) => {
+                        if (res.data.resultCode == 0) {
+                          props.unfollow(u.id);
+                        }
+                        props.toggleFollowingInProgress(false, u.id);
+                      });
+                  }}
+                >
+                  Unfollow
+                </button>
               ) : (
-                <button onClick={() => props.follow(u.id)}>Unfollow</button>
+                <button
+                  disabled={props.followingInProgress.some((id) => id === u.id)}
+                  onClick={() => {
+                    props.toggleFollowingInProgress(true, u.id);
+                    axios
+                      .post(
+                        `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                        {},
+                        { withCredentials: true }
+                      )
+                      .then((res) => {
+                        if (res.data.resultCode == 0) {
+                          props.follow(u.id);
+                        }
+                        props.toggleFollowingInProgress(false, u.id);
+                      });
+                  }}
+                >
+                  Follow
+                </button>
               )}
             </div>
           </span>
           <span>
             <span>
-              <div>{u.fullName}</div>
+              <div>{u.name}</div>
               <div>{u.status}</div>
             </span>
             <span>
-              <div>{u.location.country}</div>
-              <div>{u.location.city}</div>
+              <div>{"u.location.country"}</div>
+              <div>{"u.location.city"}</div>
             </span>
           </span>
         </div>
