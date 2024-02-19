@@ -1,13 +1,15 @@
 {
   "files": {
-    "main.css": "/social-network/static/css/main.7ac443fb.css",
-    "main.js": "/social-network/static/js/main.c74efe42.js",
+    "main.css": "/social-network/static/css/main.d6c81451.css",
+    "main.js": "/social-network/static/js/main.d5be0c13.js",
+    "static/media/defolt-avatar.jpg": "/social-network/static/media/defolt-avatar.33fa5f9ca4a379e607da.jpg",
+    "static/media/Spinner-1s-200px.svg": "/social-network/static/media/Spinner-1s-200px.b767aab46ea3fa309aff5e12d5006915.svg",
     "index.html": "/social-network/index.html",
-    "main.7ac443fb.css.map": "/social-network/static/css/main.7ac443fb.css.map",
-    "main.c74efe42.js.map": "/social-network/static/js/main.c74efe42.js.map"
+    "main.d6c81451.css.map": "/social-network/static/css/main.d6c81451.css.map",
+    "main.d5be0c13.js.map": "/social-network/static/js/main.d5be0c13.js.map"
   },
   "entrypoints": [
-    "static/css/main.7ac443fb.css",
-    "static/js/main.c74efe42.js"
+    "static/css/main.d6c81451.css",
+    "static/js/main.d5be0c13.js"
   ]
 }
