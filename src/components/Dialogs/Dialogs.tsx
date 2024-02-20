@@ -4,9 +4,11 @@ import classes from "./Dialogs.module.css";
 import DialogsItem from "./DialogsItem/DialogsItem";
 import Message from "./Messages/Messages";
 import { DialogsStateType } from "../../redux/reducers/dialogs-reducer";
+import { Navigate } from "react-router-dom";
 
 export type DialogsPropsType = {
   dialogsPageState: DialogsStateType;
+  isAuth: boolean;
   AddMessage: () => void;
   changeMessange: (value: string) => void;
 };

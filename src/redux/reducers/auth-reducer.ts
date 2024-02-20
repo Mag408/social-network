@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { initialState } from "./users-reducer";
+import { authAPI } from "../../api/api";
+import { Dispatch } from "redux";
 
 const SET_USER_DATA = "SET_USER_DATA";
 
@@ -50,3 +52,15 @@ export const setUserData = (userId: number, email: string, login: string) => ({
 });
 
 export default authReducer;
+
+//thunks
+export const getUserDataTC = () => {
+  return (dispatch: Dispatch) => {
+    authAPI.me().then((res) => {
+      if (res.data.resultCode === 0) {
+        const { id, email, login } = res.data.data;
+        dispatch(setUserData(id, email, login));
+      }
+    });
+  };
+};

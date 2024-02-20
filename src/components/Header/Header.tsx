@@ -5,10 +5,10 @@ import { NavLink } from "react-router-dom";
 type HeaderPropsType = {
   isAuth: boolean;
   login: string | null;
-  setUserData: (id: number, email: string, login: string) => void;
 };
-
 const Header: React.FC<HeaderPropsType> = (props) => {
+  console.log(props.isAuth);
+
   return (
     <header className={classes.header}>
       <img

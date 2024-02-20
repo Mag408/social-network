@@ -10,6 +10,8 @@ import {
   DialogsStateType,
   UpdateNewMessageAC,
 } from "../../redux/reducers/dialogs-reducer";
+import { Navigate } from "react-router-dom";
+import { withAuthRedirect } from "../../hoc/WithAuthRedirect";
 
 type mapStateToPropsType = {
   dialogsPageState: DialogsStateType;
@@ -39,7 +41,9 @@ const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
   };
 };
 
+const AuthRedirectComponent = withAuthRedirect(Dialogs);
+
 export const DialogsContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Dialogs);
+)(AuthRedirectComponent);
