@@ -5,6 +5,7 @@ import { profailReducer } from "./reducers/profail-reducer";
 import { usersReducer } from "./reducers/users-reducer";
 import authReducer from "./reducers/auth-reducer";
 import thunk from "redux-thunk";
+import { reducer as formReducer } from "redux-form";
 
 const rootReducer = combineReducers({
   profilePage: profailReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   sideBar: sidebarReducer,
   usersPage: usersReducer,
   auth: authReducer,
+  form: formReducer,
 });
 
 export type AppStateType = ReturnType<typeof rootReducer>;

@@ -7,8 +7,6 @@ type HeaderPropsType = {
   login: string | null;
 };
 const Header: React.FC<HeaderPropsType> = (props) => {
-  console.log(props.isAuth);
-
   return (
     <header className={classes.header}>
       <img
